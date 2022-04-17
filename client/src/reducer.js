@@ -50,6 +50,7 @@ export default function reducer(state, action) {
         pins: [
           ...state.pins.map(pin => {
            if (pin._id === action.payload.pin) {
+             pin.comments = pin.comments || []
              pin.comments.unshift(action.payload)
            }
 

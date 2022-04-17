@@ -8,8 +8,11 @@ import Typography from "@material-ui/core/Typography";
 
 const Login = ({ classes }) => {
   const { dispatch } = useContext(appContext);
-  const token = res.getAuthResponse().id_token
   const responseGoogle = async res => {
+    console.log(res.getBasicProfile())
+
+    const token = res.getAuthResponse().id_token
+
     try {
       const graphQLClient = new GraphQLClient("http://localhost:8080/graphql", {
         headers: {
@@ -28,8 +31,9 @@ const Login = ({ classes }) => {
         }
       }
     `;
-
+      console.log(query)
       const { me } = await graphQLClient.request(query);
+      console.log(me)
       dispatch({ type: "LOGGED_IN", payload: me });
       dispatch({ type: "IS_LOGGED_IN", payload: res.isSignedIn() });
     } catch (e) {
@@ -43,9 +47,7 @@ const Login = ({ classes }) => {
       </Typography>
 
       <GoogleLogin
-        clientId={
-          "1010376071284-50kkhosj8f1ovpdt3gtbfuakdt89bb8b.apps.googleusercontent.com"
-        }
+        clientId={"714415920029-kfb0a99k7pjj2b3e98gmt21bipa0voth.apps.googleusercontent.com"}
         onSuccess={responseGoogle}
         buttonText="Login with Google"
         onFailure={e => console.log(e)}

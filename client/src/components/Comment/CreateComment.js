@@ -16,10 +16,12 @@ const CreateComment = ({ classes }) => {
   const pinId = AppState.pin._id;
 
   const handleSubmitComment = async () => {
-    const res = await client.request(CREATE_COMMENT, {
+    await client.request(CREATE_COMMENT, {
       pinId,
       text: comment
     });
+
+       setComment("")
   };
 
   return (

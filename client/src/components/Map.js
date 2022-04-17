@@ -5,7 +5,6 @@ import { Subscription } from "react-apollo";
 
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
 import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
 import PinIcon from "./PinIcon";
@@ -82,7 +81,7 @@ const Map = ({ classes }) => {
   }
 
   async function handleDeletePin() {
-    const { deletePin } = await client.request(DELETE_PIN, { _id: pin._id });
+    await client.request(DELETE_PIN, { _id: pin._id });
   }
   return (
     <div className={mobileSize ? classes.rootMobile : classes.root}>
@@ -170,7 +169,6 @@ const Map = ({ classes }) => {
       <Subscription
         subscription={PIN_ADDED_SUBSCRIPTION}
         onSubscriptionData={({ subscriptionData }) => {
-          console.log('heeeeeeeeeeereeeeeeee')
           const { pinAdded } = subscriptionData.data;
           console.log({ pinAdded });
           dispatch({ type: "ADD_PIN", payload: pinAdded });
@@ -187,7 +185,6 @@ const Map = ({ classes }) => {
         subscription={PIN_DELETED_SUBSCRIPTION}
         onSubscriptionData={({ subscriptionData }) => {
           const { pinDeleted } = subscriptionData.data;
-          console.log(pinDeleted._id);
           dispatch({ type: "DELETE_PIN", payload: pinDeleted._id });
         }}
       />

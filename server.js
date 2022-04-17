@@ -3,10 +3,9 @@ const resolvers = require("./resolvers");
 const typeDefs = require("./typeDefs");
 const getOrCreateUser = require("./controllers/userController");
 const mongoose = require("mongoose");
-const User = require("./models/User");
+require("./models/User");
 require("./models/Comment");
 const Pin = require("./models/Pin");
-
 require("dotenv").config();
 
 mongoose
@@ -28,33 +27,29 @@ const server = new ApolloServer({
         ...connection.context
       }
     }
-
     const token = req.headers.authorization;
-    if (!token) throw new Error("you must authenicated") 
+    if (!token) throw new Error("you must be authanicated") 
     const user = await getOrCreateUser(token);
-
-
 
     return   {user};
   },
   subscriptions: {
     onConnect: async (connectionParams, webSocket, context) => {
-      console.log(`Subscription client connected using Apollo server's built-in SubscriptionServer.`)
-      if (!connectionParams.authToken) throw new Error("you must authenicated") 
+      if (!connectionParams.authToken) throw new Error("you must be authanicated") 
       try {
 
          await getOrCreateUser(connectionParams.authToken);
 
         
       } catch (error) {
-        throw new Error("you must authenicated") 
+        throw new Error("you must be authanicated") 
         
       }
 
    
     },
     onDisconnect:  (webSocket, context) => {
-      console.log(`Subscription client disconnected.`)
+      //console.log(`Subscription client disconnected.`)
     }
    }
 

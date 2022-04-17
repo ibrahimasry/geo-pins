@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext,  } from "react";
 import axios from "axios";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -54,7 +54,7 @@ const CreatePin = ({ classes }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     const image = await handleUploadImage();
-    const { createPin } = await client.request(CREATE_PIN, {
+    await client.request(CREATE_PIN, {
       title,
       image,
       content,

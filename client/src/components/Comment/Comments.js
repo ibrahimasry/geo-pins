@@ -10,7 +10,7 @@ import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 const Comments = ({ comments = [], classes }) => (
   <List className={classes.root}>
-    {comments.map((comment, i) => (
+    {comments && comments.map((comment, i) => (
       <ListItem key={i} alignItems="flex-start">
         <ListItemAvatar>
           <Avatar src={comment.author.picture} alt={comment.author.name} />
