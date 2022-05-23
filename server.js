@@ -8,6 +8,7 @@ require("./models/Comment");
 const Pin = require("./models/Pin");
 require("dotenv").config();
 
+console.log(process.env.MONGOURL);
 mongoose
   .connect(process.env.MONGOURL, {useNewUrlParser: true})
   .then(() => console.log("connected to mongo"))
@@ -45,6 +46,7 @@ const server = new ApolloServer({
     },
   },
 });
+
 server.listen({port: process.env.PORT || 8080}).then(({url}) => {
   console.log(`🚀  Server ready at ${url}`);
 });

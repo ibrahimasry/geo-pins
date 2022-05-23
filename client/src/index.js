@@ -17,7 +17,7 @@ import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
 
 const wsLink = new WebSocketLink({
-  uri: "ws://image2022.herokuapp.com/graphql",
+  uri: "ws:https//image2022.herokuapp.com/graphql",
   credentials: "include",
 
   options: {
