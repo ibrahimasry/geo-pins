@@ -1,27 +1,31 @@
-import React, { useState, useContext } from "react";
-import { withStyles } from "@material-ui/core";
+import React, {useState, useContext} from "react";
+import {withStyles} from "@material-ui/core";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import SendIcon from "@material-ui/icons/Send";
 import Divider from "@material-ui/core/Divider";
 import useClient from "../../client";
-import { CREATE_COMMENT } from "../../graphql/mutations";
+import {CREATE_COMMENT} from "../../graphql/mutations";
 import appContext from "../../context";
 
-const CreateComment = ({ classes }) => {
+const CreateComment = ({classes}) => {
   const [comment, setComment] = useState("");
   const client = useClient();
-  const { state: AppState } = useContext(appContext);
+  const {state: AppState, dispatch} = useContext(appContext);
   const pinId = AppState.pin._id;
 
   const handleSubmitComment = async () => {
-    await client.request(CREATE_COMMENT, {
+    const res = await client.request(CREATE_COMMENT, {
       pinId,
-      text: comment
+      text: comment,
     });
 
-       setComment("")
+    if (res.createComment) {
+      res.createComment.pin = pinId;
+      dispatch({type: "CREATE_COMMENT", payload: res.createComment});
+    }
+    setComment("");
   };
 
   return (
@@ -39,7 +43,7 @@ const CreateComment = ({ classes }) => {
           placeholder="Add Comment"
           multiline={true}
           value={comment}
-          onChange={e => setComment(e.target.value)}
+          onChange={(e) => setComment(e.target.value)}
         />
         <IconButton
           onClick={handleSubmitComment}
@@ -54,23 +58,23 @@ const CreateComment = ({ classes }) => {
   );
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   form: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
   },
   clearButton: {
     padding: 0,
-    color: "red"
+    color: "red",
   },
   sendButton: {
     padding: 0,
-    color: theme.palette.secondary.dark
-  }
+    color: theme.palette.secondary.dark,
+  },
 });
 
 export default withStyles(styles)(CreateComment);
