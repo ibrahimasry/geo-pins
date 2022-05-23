@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const {ApolloServer, gql, PubSub} = require("apollo-server");
 const resolvers = require("./resolvers");
 const typeDefs = require("./typeDefs");
@@ -6,8 +8,7 @@ const mongoose = require("mongoose");
 require("./models/User");
 require("./models/Comment");
 require("./models/Pin");
-require("dotenv").config();
-
+console.log(process.env.MONGOURL);
 mongoose
   .connect(process.env.MONGOURL, {
     useNewUrlParser: true,
