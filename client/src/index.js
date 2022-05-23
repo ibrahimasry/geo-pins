@@ -17,7 +17,7 @@ import {WebSocketLink} from "apollo-link-ws";
 import {InMemoryCache} from "apollo-cache-inmemory";
 
 const wsLink = new WebSocketLink({
-  uri: "ws:https//image2022.herokuapp.com/graphql",
+  uri: "wss:image2022.herokuapp.com/graphql",
   credentials: "include",
 
   options: {
@@ -36,14 +36,14 @@ const client = new ApolloClient({
 const Root = () => {
   const initialState = useContext(appContext);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const {isAuth} = state;
   return (
     <Router>
       <ApolloProvider client={client}>
         <appContext.Provider value={{state, dispatch}}>
           <Switch>
-            <ProtectedRoute exact path="/" component={App} />
-
-            <Route path="/login" component={Splash} />
+            <ProtectedRoute exact path="/" component={App} />}
+            <Route path="/login" component={Splash} />}
           </Switch>
         </appContext.Provider>
       </ApolloProvider>

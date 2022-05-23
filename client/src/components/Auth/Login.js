@@ -5,19 +5,13 @@ import {GraphQLClient} from "graphql-request";
 import {withStyles} from "@material-ui/core/styles";
 import appContext from "../../context";
 import Typography from "@material-ui/core/Typography";
+import Client from "../../client";
 
 const Login = ({classes}) => {
   const {dispatch} = useContext(appContext);
+
   const responseGoogle = async (res) => {
-    const token = res.getAuthResponse().id_token;
-
     try {
-      const graphQLClient = new GraphQLClient("http://localhost:8080/graphql", {
-        headers: {
-          authorization: token,
-        },
-      });
-
       localStorage.setItem("header", res.getAuthResponse().token);
 
       const query = `
@@ -29,10 +23,13 @@ const Login = ({classes}) => {
         }
       }
     `;
-      const {me} = await graphQLClient.request(query);
+
+      const {me} = await Client().request(query);
       dispatch({type: "LOGGED_IN", payload: me});
       dispatch({type: "IS_LOGGED_IN", payload: res.isSignedIn()});
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <div className={classes.root}>
@@ -47,6 +44,7 @@ const Login = ({classes}) => {
         onSuccess={responseGoogle}
         buttonText="Login with Google"
         isSignedIn
+        onFailure={(e) => console.log(e)}
       />
     </div>
   );

@@ -13,6 +13,7 @@ const Signout = ({classes}) => {
 
   const onSignout = () => {
     dispatch({type: "SIGN_OUT"});
+    localStorage.removeItem("header");
   };
 
   return (

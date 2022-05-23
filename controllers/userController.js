@@ -17,6 +17,7 @@ async function verify(token) {
     if (!tokenEmail) throw new Error("muse be  logged in");
   } catch (error) {}
 
+  console.log(tokenEmail);
   let user = await User.findOne({email: tokenEmail});
   if (user !== null) return user;
 

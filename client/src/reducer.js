@@ -37,7 +37,6 @@ export default function reducer(state, action) {
         ...state,
         pins: [
           ...state.pins.filter((pin) => {
-            console.log(action.payload);
             return pin._id !== action.payload;
           }),
         ],
@@ -45,7 +44,6 @@ export default function reducer(state, action) {
       };
 
     case "CREATE_COMMENT": {
-      console.log(action);
       return {
         ...state,
         pins: [

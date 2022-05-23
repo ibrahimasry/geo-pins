@@ -1,10 +1,10 @@
 import React from "react";
 const appContext = React.createContext({
   currentUser: null,
-  isAuth: false,
+  isAuth: null,
   draft: null,
   pins: [],
-  pin:null
+  pin: null,
 });
 
 export default appContext;

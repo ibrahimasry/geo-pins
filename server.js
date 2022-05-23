@@ -5,12 +5,14 @@ const getOrCreateUser = require("./controllers/userController");
 const mongoose = require("mongoose");
 require("./models/User");
 require("./models/Comment");
-const Pin = require("./models/Pin");
+require("./models/Pin");
 require("dotenv").config();
 
-console.log(process.env.MONGOURL);
 mongoose
-  .connect(process.env.MONGOURL, {useNewUrlParser: true})
+  .connect(process.env.MONGOURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("connected to mongo"))
   .catch((e) => console.log(e));
 
