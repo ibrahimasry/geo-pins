@@ -1,4 +1,4 @@
-const { ApolloServer, gql, PubSub } = require("apollo-server");
+const {ApolloServer, gql, PubSub} = require("apollo-server");
 const resolvers = require("./resolvers");
 const typeDefs = require("./typeDefs");
 const getOrCreateUser = require("./controllers/userController");
@@ -9,51 +9,42 @@ const Pin = require("./models/Pin");
 require("dotenv").config();
 
 mongoose
-  .connect(process.env.MONGOURL, { useNewUrlParser: true })
+  .connect(process.env.MONGOURL, {useNewUrlParser: true})
   .then(() => console.log("connected to mongo"))
-  .catch(e => console.log(e));
+  .catch((e) => console.log(e));
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
 
-
-  context: async ({ req ,res, connection}) => {
-
-
+  context: async ({req, res, connection}) => {
     if (connection) {
       return {
-        ...connection.context
-      }
+        ...connection.context,
+      };
     }
     const token = req.headers.authorization;
-    if (!token) throw new Error("you must be authanicated") 
+    if (!token) throw new Error("you must be authanicated");
     const user = await getOrCreateUser(token);
 
-    return   {user};
+    return {user};
   },
   subscriptions: {
     onConnect: async (connectionParams, webSocket, context) => {
-      if (!connectionParams.authToken) throw new Error("you must be authanicated") 
+      if (!connectionParams.authToken)
+        throw new Error("you must be authanicated");
       try {
-
-         await getOrCreateUser(connectionParams.authToken);
-
-        
+        await getOrCreateUser(connectionParams.authToken);
       } catch (error) {
-        throw new Error("you must be authanicated") 
-        
+        throw new Error("you must be authanicated");
       }
-
-   
     },
-    onDisconnect:  (webSocket, context) => {
+    onDisconnect: (webSocket, context) => {
       //console.log(`Subscription client disconnected.`)
-    }
-   }
-
+    },
+  },
 });
-server.listen({ port: 8080 }).then(({ url }) => {
+server.listen({port: process.env.PORT || 8080}).then(({url}) => {
   console.log(`🚀  Server ready at ${url}`);
 });
