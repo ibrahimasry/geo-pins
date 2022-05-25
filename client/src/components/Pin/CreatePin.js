@@ -58,8 +58,10 @@ const CreatePin = ({classes}) => {
       lat,
       lng,
     });
-    if (res.createPin) dispatch({type: "ADD_PIN", payload: res.createPin});
-
+    if (res.createPin) {
+      res.createPin.createdAt = new Date();
+      dispatch({type: "ADD_PIN", payload: res.createPin});
+    }
     handleDeleteDraft();
   };
 

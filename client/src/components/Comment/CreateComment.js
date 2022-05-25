@@ -23,6 +23,7 @@ const CreateComment = ({classes}) => {
 
     if (res.createComment) {
       res.createComment.pin = pinId;
+      res.createComment.createdAt = new Date();
       dispatch({type: "CREATE_COMMENT", payload: res.createComment});
     }
     setComment("");

@@ -197,10 +197,12 @@ const Map = ({classes}) => {
 const styles = {
   root: {
     display: "flex",
+    justifyContent: "center",
   },
   rootMobile: {
     display: "flex",
     flexDirection: "column-reverse",
+    alignItems: "center",
   },
   navigationControl: {
     position: "absolute",

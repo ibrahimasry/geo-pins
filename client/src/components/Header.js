@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, {useContext} from "react";
+import {withStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import MapIcon from "@material-ui/icons/Map";
 import Typography from "@material-ui/core/Typography";
-import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
+import {unstable_useMediaQuery as useMediaQuery} from "@material-ui/core/useMediaQuery";
 import appContext from "../context";
 import Signout from "./Auth/Signout";
 
-const Header = ({ classes }) => {
+const Header = ({classes}) => {
   const mobileSize = useMediaQuery("(max-width: 650px)");
   const {
-    state: { currentUser }
+    state: {currentUser},
   } = useContext(appContext);
   return (
     <div className={classes.root}>
@@ -57,28 +57,28 @@ const Header = ({ classes }) => {
   );
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grow: {
     flexGrow: 1,
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   icon: {
     marginRight: theme.spacing.unit,
     color: "green",
-    fontSize: 45
+    fontSize: 45,
   },
   mobile: {
-    display: "none"
+    display: "none",
   },
   picture: {
     height: "50px",
     borderRadius: "90%",
-    marginRight: theme.spacing.unit * 2
-  }
+    marginRight: theme.spacing.unit * 2,
+  },
 });
 
 export default withStyles(styles)(Header);
